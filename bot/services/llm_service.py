@@ -7,8 +7,8 @@ from sqlalchemy import text
 class LLMService:
     def __init__(self):
         self.api_key = os.getenv("OPENROUTER_API_KEY")
-        self.base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-        self.model = os.getenv("LLM_MODEL", "deepseek/deepseek-chat:free")
+        self.base_url = os.getenv("OPENROUTER_BASE_URL")
+        self.model = os.getenv("LLM_MODEL")
         self.database_url = os.getenv("DATABASE_URL")
         
         if not self.api_key:
@@ -67,7 +67,6 @@ IMPORTANT RULES:
         
         content = response.choices[0].message.content.strip()
         
-        # Cleanup: Remove markdown code blocks if present
         content = re.sub(r'^```sql\s*', '', content)
         content = re.sub(r'^```\s*', '', content)
         content = re.sub(r'\s*```$', '', content)
