@@ -41,8 +41,8 @@ async def query_handler(message: Message) -> None:
     if not message.text:
         return
 
-    # Notify user we are thinking
-    status_msg = await message.answer("Думаю...")
+    # Notify user we are thinking - REMOVED as per request
+    # status_msg = await message.answer("Думаю...")
     
     try:
         # 1. Generate SQL
@@ -57,11 +57,11 @@ async def query_handler(message: Message) -> None:
         logger.info(f"Result: {result}")
         
         # 3. Reply
-        await status_msg.edit_text(str(result))
+        await message.answer(str(result))
         
     except Exception as e:
         logger.error(f"Error processing query: {e}")
-        await status_msg.edit_text("Произошла ошибка при обработке запроса.")
+        await message.answer("Произошла ошибка при обработке запроса.")
 
 async def main() -> None:
     global llm_service
